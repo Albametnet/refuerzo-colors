@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import './App.css';
-import Ship from './components/Ship';
 
 class App extends Component {
   constructor (props) {
@@ -8,7 +7,7 @@ class App extends Component {
     this.state = {
       palete :  []
     }
-    
+  this.getcolors ();
   }
   getcolors() {
     fetch(
@@ -18,7 +17,7 @@ class App extends Component {
         return response.json();
       })
       .then( (json) => {
-        const mycolors = json.skills;
+        const mycolors = json.palettes;
         this.setState({
           palete: mycolors
         })
@@ -28,13 +27,23 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Ship colors={this.state.palete.map (item=> {
+       {this.state.palete.map (item=> {
           return (
             <div>
-              {item}
+              {item.name}
+              <ul>
+                
+                  {item.colors.map (color=>{
+                    return (
+                      <li  style= {{backgroundColor: `#${color}`}}>
+                      </li>
+                    )
+                  })}
+               
+              </ul>
             </div>
           )
-        })}/>
+        })}
       </div>
     );
   }
