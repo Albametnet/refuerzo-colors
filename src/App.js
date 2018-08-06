@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import './App.css';
+import Ship from './components/Ship'
 
 class App extends Component {
-  constructor (props) {
-    super (props);
+  constructor(props) {
+    super(props);
     this.state = {
-      palete :  []
+      palete: []
     }
-  this.getcolors ();
+    this.getcolors();
   }
   getcolors() {
     fetch(
@@ -16,34 +17,17 @@ class App extends Component {
       .then(function (response) {
         return response.json();
       })
-      .then( (json) => {
+      .then((json) => {
         const mycolors = json.palettes;
         this.setState({
           palete: mycolors
         })
       })
   }
-
   render() {
     return (
       <div className="App">
-       {this.state.palete.map (item=> {
-          return (
-            <div>
-              {item.name}
-              <ul>
-                
-                  {item.colors.map (color=>{
-                    return (
-                      <li  style= {{backgroundColor: `#${color}`}}>
-                      </li>
-                    )
-                  })}
-               
-              </ul>
-            </div>
-          )
-        })}
+        <Ship shipcolors={this.state.palete} />
       </div>
     );
   }
